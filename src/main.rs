@@ -1,5 +1,6 @@
 extern crate sdl2;
 
+use sdl2::render::Canvas;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::event::Event;
@@ -9,6 +10,16 @@ use std::time::Duration;
 const SCREEN_WIDTH: u32 = 1000;
 const SCREEN_HEIGHT: u32 = 600;
 const SQUARE_SIZE: u32 = 5;
+
+fn draw_rect<T>(canvas: &mut Canvas<T>, x: u32, y: u32)
+where T: sdl2::render::RenderTarget {
+    let rect = Rect::new(x.try_into().unwrap(),
+                         y.try_into().unwrap(),
+                         SQUARE_SIZE,
+                         SQUARE_SIZE);
+    canvas.fill_rect(rect).unwrap();
+    canvas.draw_rect(rect).unwrap();
+}
 
 pub fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -30,12 +41,7 @@ pub fn main() {
         for i in (0..SCREEN_HEIGHT).step_by(SQUARE_SIZE as usize) {
             for j in (0..SCREEN_WIDTH).step_by(SQUARE_SIZE as usize) {
                 if i == j {
-                    let rect = Rect::new(i.try_into().unwrap(),
-                                         j.try_into().unwrap(),
-                                         SQUARE_SIZE,
-                                         SQUARE_SIZE);
-                    canvas.fill_rect(rect).unwrap();
-                    canvas.draw_rect(rect).unwrap();
+                    draw_rect(&mut canvas, i, j);
                 }
             }
         }
