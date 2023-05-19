@@ -6,6 +6,8 @@ use sdl2::rect::Rect;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use std::time::Duration;
+use rand::thread_rng;
+use rand::seq::SliceRandom;
 
 const SCREEN_WIDTH: u32 = 1000;
 const SCREEN_HEIGHT: u32 = 600;
@@ -19,6 +21,33 @@ where T: sdl2::render::RenderTarget {
                          SQUARE_SIZE);
     canvas.fill_rect(rect).unwrap();
     canvas.draw_rect(rect).unwrap();
+}
+
+fn random_neighbor(x: u32, y: u32) -> (u32, u32) {
+    let mut neighbors = vec![];
+
+    if x > 0 {
+        if y > 0 {
+            neighbors.push((x - 1, y - 1));
+        }
+        if y < SCREEN_HEIGHT {
+            neighbors.push((x - 1, y + 1));
+        }
+    }
+
+    if x < SCREEN_WIDTH {
+        if y > 0 {
+            neighbors.push((x + 1, y - 1));
+        }
+        if y < SCREEN_HEIGHT {
+            neighbors.push((x + 1, y + 1));
+        }
+    }
+
+    let mut rng = thread_rng();
+    let chosen_one = neighbors.choose(&mut rng).unwrap();
+
+    *chosen_one
 }
 
 pub fn main() {
