@@ -69,7 +69,7 @@ impl Maze {
                 canvas.fill_rect(rect).unwrap();
                 canvas.draw_rect(rect).unwrap();
 
-                // Draw highlight in reg
+                // Draw highlight in red
                 if let Some((i, j)) = highlight {
                     canvas.set_draw_color(Color::RGB(255, 0, 0));
                     let rect = Rect::new((i * SQUARE_SIZE).try_into().unwrap(),
