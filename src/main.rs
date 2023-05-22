@@ -230,10 +230,8 @@ pub fn main() {
             stack.push(*chosen_one);
             visited.insert(*chosen_one);
         }
-
-        // maze.draw(&mut canvas, Some(current_coords));
-        // ::std::thread::sleep(Duration::from_millis(10));
     }
+
     maze.draw(&mut canvas, None);
 
     'running: loop {
